@@ -24,6 +24,7 @@ const UserSchema = new Schema({
   //Here const User = mongoose.model('user', UserSchema), User.createIndexes(), module.exports = User are created for not duplicating the data of user like name, email etc
   
   const User = mongoose.model('user', UserSchema);
-  User.createIndexes();
+  // User.createIndexes() is removed for not making the unique key for email
+//   User.createIndexes();
 
   module.exports = User;
