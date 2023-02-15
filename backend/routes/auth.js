@@ -3,11 +3,12 @@ const User = require('../models/User');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+var jwt = require('jsonwebtoken');
+const fetchuser = require('../middleware/fetchuser');
 
 const JWT_SECRET = 'Rehanisgoodb$oy';
 
-// Create a User using: POST "/api/auth/createuser". No login required
+// Route 1: Create a User using: POST "/api/auth/createuser". No login required
 router.post('/createuser', [
     //Below code for authentication
     // name must be at least 3 chars long
@@ -72,7 +73,7 @@ router.post('/createuser', [
 
 
 
-// Authenticate a User using: POST "/api/auth/login". No login required
+// Route 2: Authenticate a User using: POST "/api/auth/login". No login required
 router.post('/login', [
     //Below code for authentication
     // email must be an email
@@ -116,6 +117,24 @@ router.post('/login', [
         res.status(500).send("Internal Server Error");
     }
 
+
+});
+
+// Route 3: Get loggedin User detils except password from fetchuser.js using: POST "/api/auth/getuser". Login required
+router.post('/getuser', fetchuser, async (req, res) => {
+
+try {
+    userId = req.user.id;
+    // select("-password") is used to select all the details of user except the password
+    const user = await User.findById(userId).select("-password")
+    res.send(user)
+} catch (error) {
+     //logging the error on console
+     console.error(error.message);
+     //if some error occured show 500 error which is internal server error
+     res.status(500).send("Internal Server Error");
+}
 })
+
 
 module.exports = router
