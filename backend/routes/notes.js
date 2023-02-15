@@ -6,7 +6,7 @@ const { body, validationResult } = require('express-validator');
 
 
 
-// Route 1: Fetching all the Notes using: GET "/api/auth/fetchallnotes". Login required
+// Route 1: Fetching all the Notes using: GET "/api/notes/fetchallnotes". Login required
 router.get('/fetchallnotes', fetchuser, async (req, res) => {
     try {
         const notes = await Note.find({ user: req.user.id });
@@ -19,7 +19,7 @@ router.get('/fetchallnotes', fetchuser, async (req, res) => {
 
 })
 
-// Route 2: Add a new Note using: POST "/api/auth/addnote". Login required
+// Route 2: Add a new Note using: POST "/api/notes/addnote". Login required
 router.post('/addnote', fetchuser, [
     //checking for notes are not empty and code copied from auth.js
     body('title', 'Enter a valid title').isLength({ min: 3 }),
@@ -48,6 +48,30 @@ router.post('/addnote', fetchuser, [
         }
     })
 
+    // Route 3: Update an existing Note using: PUT "/api/notes/updatenote". Login required
+    router.put('/updatenote/:id', fetchuser, async (req, res) => {
+        //using destructing to get title, description and tag of existing note from body
+        const {title, description, tag} = req.body;
+        //create a newNote object
+        const newNote = {};
+        if(title){newNote.title = title};
+        if(description){newNote.description = description};
+        if(tag){newNote.tag = tag};
+
+        //Find the note to be updated and update it and params are parameters
+        let note = await Note.findById(req.params.id);
+        //if the note to be updated not exist
+        if(!note){return res.status(404).send("Not Found")}
+
+        //for checking if user is the same which the note belongs to and toString() gives the id of the note
+        if(note.user.toString() !== req.user.id){
+            return res.status(401).send("Not Allowed");
+        }
+        // if the note belongs to the same user
+       note = await Note.findByIdAndUpdate(req.params.id, {$set: newNote}, {new:true})
+        res.json({note});
+        })
+        
 
 
 module.exports = router
