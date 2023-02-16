@@ -11,11 +11,13 @@ function App() {
     <NoteState>
       <Router>
         <Navbar/>
+        <div className="container">
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/about" element={<About />} />
             {/* <Route path="/" element={<Textform showAlert={showAlert} mode={mode} heading="Enter text to analyze below" />} /> */}
           </Routes>
+          </div>
       </Router>
       </NoteState>
     </>
