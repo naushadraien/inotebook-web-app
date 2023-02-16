@@ -5,7 +5,7 @@ import { useState } from "react";
 const NoteState = (props)=>{
     const notesInitial = [
         {
-          "_id": "63ed1805a6c521c54adf7589",
+          "_id": "63ed1805a46c5421c54adf7589",
           "user": "63ec922477caaa02d4e5aabd",
           "title": "My Title2",
           "description": "Please wake up early2",
@@ -14,7 +14,7 @@ const NoteState = (props)=>{
           "__v": 0
         },
         {
-          "_id": "63ee22b88ccc4ff51b348ca0",
+          "_id": "63ee22b883ccc34ff51b348ca0",
           "user": "63ec922477caaa02d4e5aabd",
           "title": "My Title23",
           "description": "Please wake up early233",
@@ -23,7 +23,7 @@ const NoteState = (props)=>{
           "__v": 0
         },
         {
-          "_id": "63ed1805a6c521c54adf7589",
+          "_id": "63ed1805a6c53214c54adf7589",
           "user": "63ec922477caaa02d4e5aabd",
           "title": "My Title2",
           "description": "Please wake up early2",
@@ -32,7 +32,7 @@ const NoteState = (props)=>{
           "__v": 0
         },
         {
-          "_id": "63ed1805a6c521c54adf7589",
+          "_id": "63ed1805a6c352414c54adf7589",
           "user": "63ec922477caaa02d4e5aabd",
           "title": "My Title2",
           "description": "Please wake up early2",
@@ -41,7 +41,7 @@ const NoteState = (props)=>{
           "__v": 0
         },
         {
-          "_id": "63ed1805a6c521c54adf7589",
+          "_id": "63ed18053a6c5214c54adf7589",
           "user": "63ec922477caaa02d4e5aabd",
           "title": "My Title2",
           "description": "Please wake up early2",
@@ -50,7 +50,7 @@ const NoteState = (props)=>{
           "__v": 0
         },
         {
-          "_id": "63ed1805a6c521c54adf7589",
+          "_id": "63ed1805a6c3521c54adf7589",
           "user": "63ec922477caaa02d4e5aabd",
           "title": "My Title2",
           "description": "Please wake up early2",
@@ -59,6 +59,7 @@ const NoteState = (props)=>{
           "__v": 0
         }
       ]
+
       const [notes, setNotes] = useState(notesInitial)
     // const s1 = {
     //     "name": "Rehan",
@@ -75,10 +76,39 @@ const NoteState = (props)=>{
     //         })
     //     }, 1000);
     // }
+
+
+    //Add a note
+      const addNote = (title, description, tag)=>{
+        //TODO: API CALL
+        console.log("Adding a new Note")
+        const note = {
+          "_id": "63ed1805a6c3521c54adf7589",
+          "user": "63ec922477caaa02d4e5aabd",
+          "title": title,
+          "description": description,
+          "tag": tag,
+          "date": "2023-02-15T17:36:05.808Z",
+          "__v": 0
+        };
+        setNotes(notes.concat(note))
+      }
+
+    //Delete a note
+    const deleteNote = (id)=>{
+        
+    }
+
+    //Edit a note
+    const editNote = (id)=>{
+        
+    }
+
     return(
         // <noteContext.Provider value={{state, update}}>   Here {state, update} is used in modern js without writing {state:state, update:update}
         // <noteContext.Provider value={{state:state, update:update}}>
-        <noteContext.Provider value={{notes, setNotes}}>
+        //this is for exporting to all in the curly braces to other file
+        <noteContext.Provider value={{notes, setNotes, addNote, deleteNote, editNote }}>
             {props.children}
         </noteContext.Provider>
     )
