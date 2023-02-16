@@ -1,11 +1,9 @@
-import React, {useContext} from 'react'
-import noteContext from '../context/notes/noteContext';
+//Here one dot means one step up outside from the folder which is components and other dot means again one step up outside from the folder which is now at src foldeer
+import Notes from './Notes';
 
 
 export const Home = () => {
-  const context = useContext(noteContext);
-  //using destructure
-  const {notes, setNotes} = context;
+  
   return (
     <div>
       <div className="container my-3">
@@ -27,12 +25,7 @@ export const Home = () => {
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
       </div>
-      <div className="container my-3">
-      <h2>Your Notes</h2>
-      {notes.map((note)=>{
-        return note.title;
-      })}
-      </div>
+      <Notes/>
     </div>
   )
 }
