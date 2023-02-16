@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React  from 'react'
 import { Link, useLocation } from 'react-router-dom';
 
 
@@ -7,9 +7,9 @@ const Navbar = () => {
 
     //using the useLocation() for showing the active nav-link when clicked on Home, About links on Navbar
     let location = useLocation();
-    useEffect(() => {
-        console.log(location.pathname);
-    }, [location]);
+    // useEffect(() => {
+    //     console.log(location.pathname);
+    // }, [location]);
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
