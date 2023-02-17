@@ -18,18 +18,19 @@ router.post('/createuser', [
     // password must be at least 5 chars long
     body('password', 'Password must be atleat 5 characters').isLength({ min: 5 }),
 ], async (req, res) => {
+    let success = false;
     //If there are errors, return Bad request and the errors
     // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ success, errors: errors.array() });
     }
     try {
         //check whether the user with the same email exists already
         let user = await User.findOne({ email: req.body.email });
         // console.log(user)
         if (user) {
-            return res.status(400).json({ error: "Sorry a user with this email already exists" })
+            return res.status(400).json({ success, error: "Sorry a user with this email already exists" })
         }
 
         //becryptjs is started using from here and return a promise
@@ -61,7 +62,8 @@ router.post('/createuser', [
         //jwt.sign() is a sync method so we don't need to use await here
         const authtoken = jwt.sign(data, JWT_SECRET);
         // res.json(user)
-        res.json({authtoken})
+        success = true;
+        res.json({success, authtoken})
         //catching the errors
     } catch (error) {
         //logging the error on console
