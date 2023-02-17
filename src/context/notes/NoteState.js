@@ -40,7 +40,7 @@ const NoteState = (props) => {
     });
     //this will parse the function
     const json = await response.json()
-    console.log(json)
+    // console.log(json)
     //setNotes(json) will show all the notes of a user at client side
     setNotes(json)
   }
@@ -61,20 +61,12 @@ const NoteState = (props) => {
       body: JSON.stringify({title, description, tag})
     });
 
-    const json = await response.json();
-    console.log(json)
-
-    console.log("Adding a new Note")
-    const note = {
-      "_id": "63ed1805a6c3521c54adf7589",
-      "user": "63ec922477caaa02d4e5aabd",
-      "title": title,
-      "description": description,
-      "tag": tag,
-      "date": "2023-02-15T17:36:05.808Z",
-      "__v": 0
-    };
+    const note = await response.json();
     setNotes(notes.concat(note))
+    // console.log(json)
+
+    // console.log("Adding a new Note")
+    // const note = json;
   }
 
 
@@ -90,10 +82,10 @@ const NoteState = (props) => {
       }
     });
     const json = response.json();
-    console.log(json)
+    // console.log(json)
 
 
-    console.log("Deleting the note with id" + id);
+    // console.log("Deleting the note with id" + id);
     const newNotes = notes.filter((note) => { return note._id !== id })
     setNotes(newNotes)
   }
@@ -113,7 +105,7 @@ const NoteState = (props) => {
       body: JSON.stringify({title, description, tag})
     });
     const json = await response.json();
-    console.log(json)
+    // console.log(json)
   
     //let newNotes = JSON.parse(JSON.stringify(notes)) makes a copy of previous notes and then it will be updated
     let newNotes = JSON.parse(JSON.stringify(notes))
