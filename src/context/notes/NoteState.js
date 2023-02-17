@@ -77,17 +77,30 @@ const NoteState = (props) => {
 
 
   //Delete a note
-  const deleteNote = (id) => {
-    //TODO: API CALL
+  const deleteNote = async (id) => {
+    //API CALL for deleting the note from database of backend
+    const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+      method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        //this was copied from header section of update Note of thunderclient
+        'Content-Type': 'application/json',
+        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNlYzkyMjQ3N2NhYWEwMmQ0ZTVhYWJkIn0sImlhdCI6MTY3NjQ1NzUzMH0.dsI-m6ixeaTjZZS_DY9-1qL4vE-o9HYOOk75p258hyk'
+      }
+    });
+    const json = response.json();
+    console.log(json)
+
+
     console.log("Deleting the note with id" + id);
     const newNotes = notes.filter((note) => { return note._id !== id })
     setNotes(newNotes)
   }
 
 
+
   //Edit a note
   const editNote = async (id, title, description, tag) => {
-    //API CALL or FETCH from backend
+    //API CALL or FETCH from backend to edit note from clientside
     const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       headers: {
