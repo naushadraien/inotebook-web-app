@@ -61,6 +61,8 @@ const NoteState = (props) => {
       body: JSON.stringify({title, description, tag})
     });
 
+    const json = await response.json();
+    console.log(json)
 
     console.log("Adding a new Note")
     const note = {
@@ -102,7 +104,7 @@ const NoteState = (props) => {
   const editNote = async (id, title, description, tag) => {
     //API CALL or FETCH from backend to edit note from clientside
     const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      method: 'PUT', // *GET, POST, PUT, DELETE, etc.
       headers: {
         //this was copied from header section of update Note of thunderclient
         'Content-Type': 'application/json',
@@ -110,20 +112,22 @@ const NoteState = (props) => {
       },
       body: JSON.stringify({title, description, tag})
     });
-    const json = response.json();
+    const json = await response.json();
+    console.log(json)
   
-
-
+    //let newNotes = JSON.parse(JSON.stringify(notes)) makes a copy of previous notes and then it will be updated
+    let newNotes = JSON.parse(JSON.stringify(notes))
   //Logic for editing the notes at client side
-  for (let index = 0; index < notes.length; index++) {
-    const element = notes[index];
+  for (let index = 0; index < newNotes.length; index++) {
+    const element = newNotes[index];
     if (element._id === id) {
-      element.title = title;
-      element.description = description;
-      element.tag = tag;
+      newNotes[index].title = title;
+      newNotes[index].description = description;
+      newNotes[index].tag = tag;
+      break;
     }
-
   }
+  setNotes(newNotes);
 }
 
 

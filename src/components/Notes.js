@@ -6,7 +6,7 @@ import Noteitem from './Noteitem';
 const Notes = () => {
     const context = useContext(noteContext);
     //using destructure
-    const { notes, getNotes } = context;
+    const { notes, getNotes, editNote } = context;
     useEffect(() => {
         getNotes()
         // eslint-disable-next-line
@@ -15,18 +15,22 @@ const Notes = () => {
 
     //this is used as a reference to do something
     const ref = useRef(null)
-    const [note, setNote] = useState({etitle: "", edescription: "", etag: ""})
+    const refClose = useRef(null)
+    const [note, setNote] = useState({id:"", etitle: "", edescription: "", etag: ""})
 
     const updateNote = (currentNote) => {
         //this is used as a reference for hiding or showing the note when clicking on edit button and closing it
         ref.current.click();
-        setNote({etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag})
+        setNote({id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag})
     }
 
     const handleClick =(e)=>{
-        console.log("Updating the note", note)
+        // console.log("Updating the note", note)
         //e.preventDefault(); for not reloading the page when clicking on the submit button
-        e.preventDefault();
+        // e.preventDefault();
+        editNote(note.id, note.etitle, note.edescription, note.etag)
+        //refClose.current.click(); when after clicking the update button the dialog box for editing the note will get hide
+        refClose.current.click();
     }
     const onChange = (e)=>{
         //... means using spread operator where ...note keeps all the property of note then , [] overrides the properties which is given in the array
@@ -65,7 +69,7 @@ const Notes = () => {
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="button" className="btn btn-primary" onClick={handleClick}>Update Note</button>
                         </div>
                     </div>
