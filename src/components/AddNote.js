@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react'
 import noteContext from '../context/notes/noteContext';
 
-const AddNote = () => {
+const AddNote = (props) => {
     
     const context = useContext(noteContext);
     //using destructure
@@ -13,6 +13,7 @@ const AddNote = () => {
         e.preventDefault();
         addNote(note.title, note.description, note.tag);
         setNote({title: "", description: "", tag: ""})
+        props.showAlert(":Added Successfully", "success")
     }
     const onChange = (e)=>{
         //... means using spread operator where ...note keeps all the property of note then , [] overrides the properties which is given in the array

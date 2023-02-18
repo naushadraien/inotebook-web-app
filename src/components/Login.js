@@ -26,8 +26,9 @@ const Login = (props) => {
             localStorage.setItem('token',json.authtoken);
             //history.push("/")
             navigate('/');
+            props.showAlert(":Successfully Logged in to your account", "success")
         }else{
-            alert("Invalid credentials");
+            props.showAlert(":Invalid Details", "danger")
         }
     }
     const onChange = (e) => {

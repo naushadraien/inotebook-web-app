@@ -3,7 +3,7 @@ import noteContext from '../context/notes/noteContext';
 import AddNote from './AddNote';
 import Noteitem from './Noteitem';
 
-const Notes = () => {
+const Notes = (props) => {
     const context = useContext(noteContext);
     //using destructure
     const { notes, getNotes, editNote } = context;
@@ -31,6 +31,7 @@ const Notes = () => {
         editNote(note.id, note.etitle, note.edescription, note.etag)
         //refClose.current.click(); when after clicking the update button the dialog box for editing the note will get hide
         refClose.current.click();
+        props.showAlert(":Updated Successfully", "success")
     }
     const onChange = (e) => {
         //... means using spread operator where ...note keeps all the property of note then , [] overrides the properties which is given in the array
@@ -39,7 +40,7 @@ const Notes = () => {
     }
     return (
         <>
-            <AddNote />
+            <AddNote showAlert={props.showAlert}/>
             {/* <!-- Button trigger modal --> */}
             <button type="button" ref={ref} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Launch demo modal
@@ -81,7 +82,7 @@ const Notes = () => {
                     {notes.length === 0 && 'No notes to display'}
                 </div>
                 {notes.map((note) => {
-                    return <Noteitem key={note._id} updateNote={updateNote} note={note} />
+                    return <Noteitem key={note._id} updateNote={updateNote} showAlert={props.showAlert} note={note} />
                 })}
             </div>
         </>
