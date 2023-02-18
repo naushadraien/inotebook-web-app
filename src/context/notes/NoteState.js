@@ -35,7 +35,8 @@ const NoteState = (props) => {
       headers: {
         //this was copied from header section of update Note of thunderclient
         'Content-Type': 'application/json',
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNlYzkyMjQ3N2NhYWEwMmQ0ZTVhYWJkIn0sImlhdCI6MTY3NjQ1NzUzMH0.dsI-m6ixeaTjZZS_DY9-1qL4vE-o9HYOOk75p258hyk'
+        //The token will come from our local storage
+        'auth-token': localStorage.getItem('token')
       }
     });
     //this will parse the function
@@ -56,7 +57,7 @@ const NoteState = (props) => {
       headers: {
         //this was copied from header section of update Note of thunderclient
         'Content-Type': 'application/json',
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNlYzkyMjQ3N2NhYWEwMmQ0ZTVhYWJkIn0sImlhdCI6MTY3NjQ1NzUzMH0.dsI-m6ixeaTjZZS_DY9-1qL4vE-o9HYOOk75p258hyk'
+        'auth-token': localStorage.getItem('token')
       },
       body: JSON.stringify({title, description, tag})
     });
@@ -78,11 +79,11 @@ const NoteState = (props) => {
       headers: {
         //this was copied from header section of update Note of thunderclient
         'Content-Type': 'application/json',
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNlYzkyMjQ3N2NhYWEwMmQ0ZTVhYWJkIn0sImlhdCI6MTY3NjQ1NzUzMH0.dsI-m6ixeaTjZZS_DY9-1qL4vE-o9HYOOk75p258hyk'
+        'auth-token': localStorage.getItem('token')
       }
     });
     const json = response.json();
-    // console.log(json)
+    console.log(json)
 
 
     // console.log("Deleting the note with id" + id);
@@ -100,12 +101,12 @@ const NoteState = (props) => {
       headers: {
         //this was copied from header section of update Note of thunderclient
         'Content-Type': 'application/json',
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNlYzkyMjQ3N2NhYWEwMmQ0ZTVhYWJkIn0sImlhdCI6MTY3NjQ1NzUzMH0.dsI-m6ixeaTjZZS_DY9-1qL4vE-o9HYOOk75p258hyk'
+        'auth-token': localStorage.getItem('token')
       },
       body: JSON.stringify({title, description, tag})
     });
     const json = await response.json();
-    // console.log(json)
+    console.log(json)
   
     //let newNotes = JSON.parse(JSON.stringify(notes)) makes a copy of previous notes and then it will be updated
     let newNotes = JSON.parse(JSON.stringify(notes))

@@ -1,10 +1,15 @@
 import React  from 'react'
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 
 
 const Navbar = () => {
-
+    let navigate = useNavigate();
+    //this handleLogout function is used for when user clicked on logout button he will be redirected to login page
+    const handleLogout = ()=>{
+    localStorage.removeItem('token');
+    navigate('/login');
+    }
     //using the useLocation() for showing the active nav-link when clicked on Home, About links on Navbar
     let location = useLocation();
     // useEffect(() => {
@@ -27,10 +32,11 @@ const Navbar = () => {
                             <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/about">About</Link>
                         </li>
                     </ul>
-                    <form className="d-flex" role="search">
+                    {/* for showing the logged out button when user is logged in and hide login and signup button when user is logged in */}
+                    {!localStorage.getItem('token')?<form className="d-flex" role="search">
                     <Link className="btn btn-primary mx-1" to="/login" role="button">Login</Link>
                     <Link className="btn btn-primary mx-1" to="/signup" role="button">Signup</Link>
-                    </form>
+                    </form>: <button onClick={handleLogout} className='btn btn-primary'>Logout</button>}
                 </div>
             </div>
         </nav>

@@ -2,13 +2,20 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import noteContext from '../context/notes/noteContext';
 import AddNote from './AddNote';
 import Noteitem from './Noteitem';
+import { useNavigate } from 'react-router-dom';
 
 const Notes = (props) => {
     const context = useContext(noteContext);
+    let navigate = useNavigate();
     //using destructure
     const { notes, getNotes, editNote } = context;
     useEffect(() => {
-        getNotes()
+        //if local storage token is null then it will redirect to login page for logging in
+        if(localStorage.getItem('token')){
+            getNotes()
+        }else{
+            navigate('/login');
+        }
         // eslint-disable-next-line
         //Here [] means fetching all notes only one time
     }, [])
